@@ -2,15 +2,15 @@
 
 import { Modal } from "@/components/common/Modal";
 import React, { useState } from "react";
-import Header from "../../_components/layout/Header";
 import { PuffLoader } from "react-spinners";
 import Table from "@/components/common/Table";
 import { tagColumns } from "@/lib/columns";
 import { useDeleteTag, useTags } from "@/hooks/useTags";
 import { useModal } from "@/hooks/useModal";
 import DeleteModal from "@/components/common/DeleteModal";
-import AddTagForm from "../../_components/dashboard/forms/AddTagForm";
-import EditTagForm from "../../_components/dashboard/forms/EditTagForm";
+import Header from "@/components/layout/Header";
+import EditTagForm from "../_components/EditTagForm";
+import AddTagForm from "../_components/AddTagForm";
 
 const Tags = () => {
   const [page, setPage] = useState(1); // API page از 0 شروع میشه

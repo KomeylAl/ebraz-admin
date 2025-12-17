@@ -1,9 +1,9 @@
 "use client";
 
-import Header from "@/app/(dashboard)/_components/layout/Header";
 import DeleteModal from "@/components/common/DeleteModal";
 import { Modal } from "@/components/common/Modal";
 import RichTextEditor from "@/components/common/rich-text-editor";
+import Header from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
 import { Combobox } from "@/components/ui/custom/Combobox";
 import { MultiCombobox } from "@/components/ui/custom/MultiCombobox";
@@ -19,7 +19,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useModal } from "@/hooks/useModal";
 import { useDeletePost, usePost, useUpdatePost } from "@/hooks/usePosts";
 import { EntityType } from "@/lib/types";
-import { postSchema } from "@/validation";
+import { postSchema } from "@/validations";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import Image from "next/image";
@@ -60,10 +60,11 @@ const Post = ({ params }: PageProps) => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(`/api/categories`);
-        const entities = response.data.data.map((item: any) => ({
-          label: item.name,
-          value: item.id.toString(),
-        })) || [];
+        const entities =
+          response.data.data.map((item: any) => ({
+            label: item.name,
+            value: item.id.toString(),
+          })) || [];
         setCategories(entities);
       } catch (err: any) {
         toast.error(err.message);

@@ -1,20 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
-import Header from "../../_components/layout/Header";
+import { useState } from "react";
 import { useModal } from "@/hooks/useModal";
 import { Modal } from "@/components/common/Modal";
-import AddWorkshopForm from "../../_components/dashboard/forms/AddWorkshopForm";
-import WorkShopsList from "../../_components/dashboard/lists/WorkShopsList";
-import EditWorkshopForm from "../../_components/dashboard/forms/EditWorkshopForm";
 import DeleteModal from "@/components/common/DeleteModal";
 import Table from "@/components/common/Table";
 import { PuffLoader } from "react-spinners";
 import { useDeleteWorkshop, useWorksops } from "@/hooks/useWorkshops";
 import { workshopColumns } from "@/lib/columns";
+import Header from "@/components/layout/Header";
+import EditWorkshopForm from "../_components/EditWorkshopForm";
+import AddWorkshopForm from "../_components/AddWorkshopForm";
 
 const WorkShops = () => {
-  const [page, setPage] = useState(1); // API page از 0 شروع میشه
+  const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [search, setSearch] = useState("");
   const [item, setItem] = useState();

@@ -4,13 +4,13 @@ import { Modal } from "@/components/common/Modal";
 import { useDeleteDepartment, useDepartments } from "@/hooks/useDepartments";
 import { useModal } from "@/hooks/useModal";
 import React, { useState } from "react";
-import AddDepartmentForm from "../../_components/dashboard/forms/AddDepartmentForm";
-import EditDepartmentForm from "../../_components/dashboard/forms/EditDepartmentForm";
 import DeleteModal from "@/components/common/DeleteModal";
 import Table from "@/components/common/Table";
 import { departmentColumns } from "@/lib/columns";
 import { PuffLoader } from "react-spinners";
-import Header from "../../_components/layout/Header";
+import Header from "@/components/layout/Header";
+import EditDepartmentForm from "../_components/EditDepartmentForm";
+import AddDepartmentForm from "../_components/AddDepartmentForm";
 
 const Departments = () => {
   const [page, setPage] = useState(1); // API page از 0 شروع میشه

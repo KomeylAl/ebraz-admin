@@ -1,7 +1,7 @@
 "use client";
 
-import Header from "@/app/(dashboard)/_components/layout/Header";
 import RichTextEditor from "@/components/common/rich-text-editor";
+import Header from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
 import { Combobox } from "@/components/ui/custom/Combobox";
 import { MultiCombobox } from "@/components/ui/custom/MultiCombobox";
@@ -16,7 +16,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useStorePost } from "@/hooks/usePosts";
 import { EntityType } from "@/lib/types";
-import { postSchema } from "@/validation";
+import { postSchema } from "@/validations";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import Link from "next/link";
@@ -108,7 +108,11 @@ const CreatePost = () => {
 
           <div>
             <label>اسلاگ</label>
-            <Input {...register("slug")} className="mt-2 bg-white" placeholder="slug" />
+            <Input
+              {...register("slug")}
+              className="mt-2 bg-white"
+              placeholder="slug"
+            />
             {errors.slug && (
               <p className="text-sm text-red-500 mt-1">{errors.slug.message}</p>
             )}

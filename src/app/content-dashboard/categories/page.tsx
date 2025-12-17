@@ -3,14 +3,14 @@
 import { useCategories, useDeleteCategory } from "@/hooks/useCategories";
 import { useModal } from "@/hooks/useModal";
 import React, { useState } from "react";
-import Header from "../../_components/layout/Header";
 import { PuffLoader } from "react-spinners";
 import Table from "@/components/common/Table";
 import { categoryColumns } from "@/lib/columns";
 import { Modal } from "@/components/common/Modal";
 import DeleteModal from "@/components/common/DeleteModal";
-import AddCategoryForm from "../../_components/dashboard/forms/AddCategoryForm";
-import EditCategoryForm from "../../_components/dashboard/forms/EditCategoryForm";
+import Header from "@/components/layout/Header";
+import EditCategoryForm from "../_components/EditCategoryForm";
+import AddCategoryForm from "../_components/AddCategoryForm";
 
 const Categories = () => {
   const [page, setPage] = useState(1); // API page از 0 شروع میشه

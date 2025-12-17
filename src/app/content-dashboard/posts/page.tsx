@@ -5,8 +5,8 @@ import { usePosts } from "@/hooks/usePosts";
 import { postColumns } from "@/lib/columns";
 import React, { useState } from "react";
 import { PuffLoader } from "react-spinners";
-import Header from "../../_components/layout/Header";
 import Link from "next/link";
+import Header from "@/components/layout/Header";
 
 const Posts = () => {
   const [page, setPage] = useState(1); // API page از 0 شروع میشه

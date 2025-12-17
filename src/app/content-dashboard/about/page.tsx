@@ -5,11 +5,11 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import Header from "../../_components/layout/Header";
 import { Button } from "@/components/ui/button";
 import { useAbout, useUpdateAbout } from "@/hooks/useAbout";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import Header from "@/components/layout/Header";
 
 // 👇🏻 ولیدیشن
 const schema = yup.object().shape({
@@ -111,11 +111,7 @@ const About = () => {
               name="about"
               control={control}
               render={({ field }) => (
-                <Textarea
-                  rows={6}
-                  {...field}
-                  className="w-full bg-white"
-                />
+                <Textarea rows={6} {...field} className="w-full bg-white" />
               )}
             />
             {errors.about && (
@@ -130,10 +126,7 @@ const About = () => {
                 name="address"
                 control={control}
                 render={({ field }) => (
-                  <Input
-                    {...field}
-                    className="w-full bg-white"
-                  />
+                  <Input {...field} className="w-full bg-white" />
                 )}
               />
               {errors.address && (
@@ -147,10 +140,7 @@ const About = () => {
                 name="phones"
                 control={control}
                 render={({ field }) => (
-                  <Input
-                    {...field}
-                    className="w-full bg-white"
-                  />
+                  <Input {...field} className="w-full bg-white" />
                 )}
               />
               {errors.phones && (
