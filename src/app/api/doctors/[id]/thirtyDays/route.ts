@@ -23,6 +23,8 @@ export async function GET(
       }
     );
     if (!response.ok) {
+      const error = await response.json();
+      console.log(error);
       return NextResponse.json(
         { message: "Error getting apps" },
         { status: response.status }

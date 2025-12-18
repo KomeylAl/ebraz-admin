@@ -36,3 +36,41 @@ export async function GET(req: NextRequest) {
     );
   }
 }
+
+export async function POST(req: NextRequest) {
+  const token = req.cookies.get("token");
+
+  const data = await req.json();
+
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}api/clients`,
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token?.value}`,
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    if (!response.ok) {
+      const data = await response.json();
+      console.log(data)
+      return NextResponse.json(
+        { message: `${data?.message ?? "خطا در افزودن مراجع"}` },
+        { status: response.status }
+      );
+    }
+
+    return NextResponse.json(
+      { message: "Admin added successfuly" },
+      { status: 201 }
+    );
+  } catch (error: any) {
+    return NextResponse.json(
+      { message: `Something went wrong: ${error.message}` },
+      { status: 500 }
+    );
+  }
+}

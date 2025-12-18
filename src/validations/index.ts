@@ -6,3 +6,4 @@ export * from "./departmentValidations";
 export * from "./postValidations";
 export * from "./tagValidations";
 export * from "./workshopValidations";
+export * from "./clientValidations";

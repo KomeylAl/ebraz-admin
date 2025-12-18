@@ -28,14 +28,14 @@ const AdminDashboard = () => {
         </div>
 
         <div className="mt-12 flex-1">
-          <Tabs defaultValue="sevenDays" className="w-full overflow-x-auto">
+          <Tabs defaultValue="todaysApps" className="w-full overflow-x-auto">
             <TabsList className="gap-4">
               <TabsTrigger value="todaysApps" defaultChecked>
                 نوبت های امروز
               </TabsTrigger>
               <TabsTrigger value="clients">مراجعان</TabsTrigger>
             </TabsList>
-            <TabsContent value="todaysApp" className="w-full">
+            <TabsContent value="todaysApps" className="w-full">
               <ToDaysList />
             </TabsContent>
             <TabsContent value="clients" className="w-full">

@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { useEffect } from "react";
 
-import logo from "../../public/images/logo.png";
-import logoW from "../../public/images/logo-w.png";
+import logo from "../../../public/images/logo.png";
+import logoW from "../../../public/images/logo-w.png";
 import { animatePageIn } from "@/lib/animation";
 import { useTheme } from "@/context/ThemeContext";
 

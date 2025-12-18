@@ -1,31 +1,38 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { BeatLoader, PuffLoader } from "react-spinners";
-import { useRouter } from "next/navigation";
-import { getCookie } from "cookies-next";
-import { MdDelete, MdEditSquare } from "react-icons/md";
-import Link from "next/link";
-import { IoDocument } from "react-icons/io5";
+import { useState } from "react";
+import { PuffLoader } from "react-spinners";
 import { useClients, useDeleteClient } from "@/hooks/useClients";
 import { useModal } from "@/hooks/useModal";
 import Table from "@/components/common/Table";
 import { clientColumns } from "@/lib/columns";
 import { Modal } from "@/components/common/Modal";
 import DeleteModal from "@/components/common/DeleteModal";
+import { ClientApiType } from "../../../../../types/clientTypes";
+import UpdateClientForm from "../forms/UpdateClientForm";
+import CreateClientForm from "../forms/CreateClientForm";
 
 export const ClientsList = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [clientId, setClientId] = useState("");
-  const [client, setClient] = useState<any>({});
-  const { data, isLoading, refetch } = useClients(0, 10, "");
-  const { mutate: deleteClient, isPending } = useDeleteClient(() => {
-    closeDelete();
-    refetch();
-  });
-  const { isOpen, openModal, closeModal } = useModal();
+  const [search, setSearch] = useState("");
+
+  const [clientId, setClientId] = useState("0");
+  const [client, setClient] = useState<ClientApiType>();
+
+  const { data, isLoading, error, refetch } = useClients(
+    page,
+    pageSize,
+    search
+  );
+
+  const { mutate: deleteClient, isPending: isDeleting } = useDeleteClient(
+    () => {
+      closeDelete();
+      refetch();
+    }
+  );
+
   const {
     isOpen: deleteOpen,
     openModal: openDelete,
@@ -37,9 +44,17 @@ export const ClientsList = () => {
     openModal: openEdit,
     closeModal: closeEdit,
   } = useModal();
+  const { isOpen, openModal, closeModal } = useModal();
+
   return (
     <div className="w-full h-full flex items-center justify-center">
       {isLoading && <PuffLoader size={60} color="#3e86fa" />}
+
+      {error && (
+        <div className="w-full h-full flex items-center justify-center">
+          <p className="text-rose-500">خطا در دریافت اطلاعات</p>
+        </div>
+      )}
 
       {data && (
         <Table
@@ -53,22 +68,15 @@ export const ClientsList = () => {
             setPage(newPage);
           }}
           onDelete={(item: any) => {
-            console.log(item);
             setClientId(item.id);
             openDelete();
           }}
           onEdit={(item: any) => {
-            console.log(item);
-            setClientId(item.id);
             setClient(item);
             openEdit();
           }}
         />
       )}
-
-      <Modal isOpen={isOpen} onClose={closeModal}>
-        <div className="max-w-[500px] h-20 bg-"></div>
-      </Modal>
 
       <Modal
         showCloseButton={false}
@@ -78,11 +86,40 @@ export const ClientsList = () => {
       >
         <DeleteModal
           deleteFn={() => deleteClient(clientId)}
-          isDeleting={isPending}
-          onCancel={() => {
-            closeDelete();
+          isDeleting={isDeleting}
+          onCancel={closeDelete}
+          description="با حذف مراجع تمامی نوبت ها، ارزیابی ها و پرونده مراجع نیز حدف میگردد."
+        />
+      </Modal>
+
+      <Modal
+        showCloseButton={false}
+        isOpen={editOpen}
+        onClose={closeEdit}
+        className="max-w-[700px] bg-white"
+      >
+        <UpdateClientForm
+          client={client!}
+          onClientUpdated={() => {
+            closeEdit();
             refetch();
           }}
+          onCloseModal={closeEdit}
+        />
+      </Modal>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={closeModal}
+        className="max-w-[700px] bg-white"
+        showCloseButton={false}
+      >
+        <CreateClientForm
+          onClientCreated={() => {
+            closeModal();
+            refetch();
+          }}
+          onCloseModal={closeModal}
         />
       </Modal>
     </div>

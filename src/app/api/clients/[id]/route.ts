@@ -34,3 +34,82 @@ export async function GET(
     );
   }
 }
+
+export async function POST(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const token = req.cookies.get("token");
+  const { id } = await params;
+
+  const data = await req.json();
+
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}api/clients/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token?.value}`,
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    if (!response.ok) {
+      const data = await response.json();
+      return NextResponse.json(
+        { message: `${data?.message ?? "خطا در ویرایش مراجع"}` },
+        { status: response.status }
+      );
+    }
+
+    return NextResponse.json(
+      { message: "Client updated successfuly" },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    return NextResponse.json(
+      { message: `Something went wrong: ${error.message}` },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const token = req.cookies.get("token");
+  const { id } = await params;
+
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}api/clients/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token?.value}`,
+        },
+      }
+    );
+    if (!response.ok) {
+      const data = await response.json();
+      return NextResponse.json(
+        { message: `${data?.message ?? "خطا در حذف مراجع"}` },
+        { status: response.status }
+      );
+    }
+
+    return NextResponse.json(
+      { message: "Client deleted successfuly" },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    return NextResponse.json(
+      { message: `Something went wrong: ${error.message}` },
+      { status: 500 }
+    );
+  }
+}

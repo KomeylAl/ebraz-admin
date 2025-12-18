@@ -37,12 +37,9 @@ export function useAppointments(
   });
 }
 
-export function useDeleteAppointment(
-  appointmentId: string,
-  onDeletedAppointment: () => void
-) {
+export function useDeleteAppointment(onSuccess: () => void) {
   return useMutation({
-    mutationFn: async () => {
+    mutationFn: async (appointmentId: string) => {
       const res = await fetch(`/api/appointments/${appointmentId}`, {
         method: "DELETE",
       });
@@ -55,7 +52,7 @@ export function useDeleteAppointment(
     },
     onSuccess: () => {
       toast.success("نوبت با موفقت حذف شد");
-      onDeletedAppointment();
+      onSuccess();
     },
   });
 }

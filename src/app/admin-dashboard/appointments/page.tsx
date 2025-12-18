@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import AddAppForm from "../_components/forms/StoreAppForm";
 import UpdateAppForm from "../_components/forms/UpdateAppForm";
 import { AppointmentApiType } from "../../../../types/appointmentTypes";
+import DeleteModal from "@/components/common/DeleteModal";
 
 const Appinments = () => {
   const [value, setValue] = useState<DateObject>();
@@ -39,13 +40,11 @@ const Appinments = () => {
     refetch,
   } = useAppointments(page, pageSize, search, baseDate);
 
-  const { mutate: deleteAppointment, isPending } = useDeleteAppointment(
-    appId,
-    () => {
+  const { mutate: deleteAppointment, isPending: isDeleting } =
+    useDeleteAppointment(() => {
       closeModal();
       refetch();
-    }
-  );
+    });
 
   const { isOpen, openModal, closeModal } = useModal();
   const {
@@ -57,6 +56,11 @@ const Appinments = () => {
     isOpen: editOpen,
     openModal: openEdit,
     closeModal: closeEdit,
+  } = useModal();
+  const {
+    isOpen: deleteOpen,
+    openModal: openDelete,
+    closeModal: closeDelete,
   } = useModal();
 
   const debouncedSearch = useCallback(
@@ -126,40 +130,22 @@ const Appinments = () => {
               }}
               onDelete={(item: any) => {
                 setAppId(item.referral_id);
-                openModal();
+                openDelete();
               }}
             />
           )}
 
           <Modal
             showCloseButton={false}
-            isOpen={isOpen}
-            onClose={closeModal}
+            isOpen={deleteOpen}
+            onClose={closeDelete}
             className="max-w-[700px] bg-white"
           >
-            <div className="w-full h-40 flex flex-col items-start justify-between p-10">
-              <p className="text-lg">آیا از حذف این مورد اطمینان دارید؟</p>
-              <div className="w-full flex items-center justify-end gap-4">
-                <Button
-                  variant="destructive"
-                  size="lg"
-                  className={`cursor-pointer ${
-                    isPending ? "bg-rose-400" : "bg-rose-600"
-                  }`}
-                  onClick={() => deleteAppointment()}
-                >
-                  {isPending ? "در حال حذف..." : "حذف"}
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="cursor-pointer"
-                  onClick={closeModal}
-                >
-                  بازگشت
-                </Button>
-              </div>
-            </div>
+            <DeleteModal
+              deleteFn={() => deleteAppointment(appId)}
+              isDeleting={isDeleting}
+              onCancel={closeDelete}
+            />
           </Modal>
           <Modal
             isOpen={addModalOpen}

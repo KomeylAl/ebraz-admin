@@ -167,9 +167,9 @@ export const doctorColumns = [
   {
     header: "پنل مشاور",
     accessor: (row: any) => (
-      <Link href={`/admin/doctors/panel/${row.id}`}>
+      <TransitionLink href={`/admin-dashboard/doctors/panel/${row.id}`}>
         <MdInsertChart size={25} className="text-blue-500" />
-      </Link>
+      </TransitionLink>
     ),
   },
 ];

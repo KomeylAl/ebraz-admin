@@ -23,6 +23,8 @@ export async function GET(
       }
     );
     if (!response.ok) {
+      const error = await response.json();
+      console.log(error);
       return NextResponse.json(
         { message: "Error getting apps" },
         { status: response.status }
@@ -30,7 +32,6 @@ export async function GET(
     }
 
     const data = await response.json();
-
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     return NextResponse.json(

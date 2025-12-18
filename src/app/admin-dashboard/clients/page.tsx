@@ -4,24 +4,35 @@ import { Modal } from "@/components/common/Modal";
 import { useCallback, useState } from "react";
 import { debounce } from "lodash";
 import { useModal } from "@/hooks/useModal";
-import { useClients } from "@/hooks/useClients";
+import { useClients, useDeleteClient } from "@/hooks/useClients";
 import { PuffLoader } from "react-spinners";
 import Table from "@/components/common/Table";
 import { clientColumns } from "@/lib/columns";
 import Header from "@/components/layout/Header";
+import CreateClientForm from "../_components/forms/CreateClientForm";
+import UpdateClientForm from "../_components/forms/UpdateClientForm";
+import { ClientApiType } from "../../../../types/clientTypes";
+import DeleteModal from "@/components/common/DeleteModal";
 
 const Clients = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [search, setSearch] = useState("");
 
-  const [clientId, setClientId] = useState(0);
-  const [client, setClient] = useState<any>({});
+  const [clientId, setClientId] = useState("0");
+  const [client, setClient] = useState<ClientApiType>();
 
   const { data, isLoading, error, refetch } = useClients(
     page,
     pageSize,
     search
+  );
+
+  const { mutate: deleteClient, isPending: isDeleting } = useDeleteClient(
+    () => {
+      closeDelete();
+      refetch();
+    }
   );
 
   const {
@@ -83,13 +94,10 @@ const Clients = () => {
                   setPage(newPage);
                 }}
                 onDelete={(item: any) => {
-                  console.log(item)
                   setClientId(item.id);
                   openDelete();
                 }}
                 onEdit={(item: any) => {
-                  console.log(item)
-                  setClientId(item.id);
                   setClient(item);
                   openEdit();
                 }}
@@ -102,16 +110,28 @@ const Clients = () => {
               onClose={closeDelete}
               className="max-w-[700px] bg-white"
             >
-              <div></div>
+              <DeleteModal
+                deleteFn={() => deleteClient(clientId)}
+                isDeleting={isDeleting}
+                onCancel={closeDelete}
+                description="با حذف مراجع تمامی نوبت ها، ارزیابی ها و پرونده مراجع نیز حدف میگردد."
+              />
             </Modal>
 
             <Modal
               showCloseButton={false}
               isOpen={editOpen}
               onClose={closeEdit}
-              className="max-w-[700px] bg-white max-h-[90%] overflow-y-auto"
+              className="max-w-[700px] bg-white"
             >
-              <div></div>
+              <UpdateClientForm
+                client={client!}
+                onClientUpdated={() => {
+                  closeEdit();
+                  refetch();
+                }}
+                onCloseModal={closeEdit}
+              />
             </Modal>
           </div>
         </div>
@@ -122,7 +142,13 @@ const Clients = () => {
         className="max-w-[700px] bg-white"
         showCloseButton={false}
       >
-        <div></div>
+        <CreateClientForm
+          onClientCreated={() => {
+            closeModal();
+            refetch();
+          }}
+          onCloseModal={closeModal}
+        />
       </Modal>
     </div>
   );

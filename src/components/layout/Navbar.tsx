@@ -31,35 +31,35 @@ const Navbar = () => {
     {
       title: "داشبورد",
       link: "/admin-dashboard",
-      access: ["manager", "boss"],
+      access: ["manager", "boss", "receptionist"],
       icon: <LayoutDashboard />,
     },
     {
       title: "داشبورد محتوا",
-      link: "/dashboard",
+      link: "/content-dashboard",
       access: ["author"],
       icon: <MdDashboard />,
     },
     {
       title: "نوبت ها",
       link: "/admin-dashboard/appointments",
-      access: ["manager", "boss"],
+      access: ["manager", "boss", "receptionist"],
       icon: <CalendarCheck />,
     },
     {
       title: "ارزیابی ها",
       link: "/admin-dashboard/assessments",
-      access: ["manager", "boss"],
+      access: ["manager", "boss", "receptionist"],
       icon: <CalendarFold />,
     },
     {
       title: "مراجعان",
       link: "/admin-dashboard/clients",
-      access: ["manager", "boss"],
+      access: ["manager", "boss", "receptionist"],
       icon: <List />,
     },
     {
-      title: "مشاورین",
+      title: "روان‌درمانگران",
       link: "/admin-dashboard/doctors",
       access: ["manager", "boss"],
       icon: <UserRound />,
@@ -67,13 +67,13 @@ const Navbar = () => {
     {
       title: "پرداخت ها",
       link: "/admin-dashboard/payments",
-      access: ["manager", "boss"],
+      access: ["manager", "boss", "accountant"],
       icon: <CreditCard />,
     },
     {
       title: "اعلانات",
       link: "/admin-dashboard/notifications",
-      access: ["manager", "boss"],
+      access: ["manager", "boss", "receptionist", "accountant"],
       icon: <Bell />,
     },
     {
@@ -101,7 +101,7 @@ const Navbar = () => {
       icon: <GrArticle />,
     },
     {
-      title: "دسته بندی ها ها",
+      title: "دسته بندی ها",
       link: "/content-dashboard/categories",
       access: ["author"],
       icon: <TbCategory2 />,

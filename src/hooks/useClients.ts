@@ -1,4 +1,3 @@
-import { CLientRecordType } from "@/types/clientsTypes";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
@@ -77,6 +76,54 @@ export function useDeleteClient(onSuccess: () => void) {
     onSuccess: () => {
       toast.success("مراجع با موفقیت حذف شد");
       onSuccess();
+    },
+  });
+}
+
+export function useStoreClient(onClientStored: () => void) {
+  return useMutation({
+    mutationFn: async (data: any) => {
+      const res = await fetch(`/api/clients/`, {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(
+          `${error?.message ?? "مشکلی در افزودن مراجع پیش آمده!"}`
+        );
+      }
+    },
+    onError(error) {
+      toast.error(error.message);
+    },
+    onSuccess: () => {
+      toast.success("مراجع با موفقت افزودن شد");
+      onClientStored();
+    },
+  });
+}
+
+export function useUpdateClient(onClientUpdated: () => void) {
+  return useMutation({
+    mutationFn: async ({ data, clientId }: { data: any; clientId: string }) => {
+      const res = await fetch(`/api/clients/${clientId}`, {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(
+          `${error?.message ?? "مشکلی در ویرایش مراجع پیش آمده!"}`
+        );
+      }
+    },
+    onError(error) {
+      toast.error(error.message);
+    },
+    onSuccess: () => {
+      toast.success("مراجع با موفقت ویرایش شد");
+      onClientUpdated();
     },
   });
 }
