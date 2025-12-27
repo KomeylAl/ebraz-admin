@@ -5,6 +5,8 @@ import NotificationDropdown from "@/components/common/dropdown/NotificationDropd
 import UserDropdown from "@/components/common/dropdown/UserDropdown";
 import { Input } from "@/components/ui/input";
 import { useSidebar } from "@/context/SidebarContext";
+import { ArrowRight } from "lucide-react";
+import Navbar from "./Navbar";
 
 interface HeaderProps {
   title?: string;
@@ -65,6 +67,18 @@ const Header = ({ isShowSearch, searchFn, className }: HeaderProps) => {
           )}
           {/* Cross Icon */}
         </button>
+        <div
+          className={`fixed top-0 right-0 z-10 lg:hidden h-screen w-56 bg-white dark:bg-gray-800 flex flex-col items-center justify-center gap-10 shadow-lg transform ${
+            isMobileOpen ? "translate-x-0" : "translate-x-full"
+          } transition-transform duration-300 ease-in-out`}
+        >
+          <div className="fixed top-10 right-10 z-10">
+            <button onClick={toggleMobileSidebar}>
+              <ArrowRight size={30} />
+            </button>
+          </div>
+          <Navbar />
+        </div>
         <Input
           type="text"
           disabled={!isShowSearch}
