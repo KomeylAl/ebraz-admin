@@ -1,6 +1,6 @@
 "use client";
 
-import { MdClass, MdDashboard, MdPayment } from "react-icons/md";
+import { MdClass, MdDashboard } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import { FiList } from "react-icons/fi";
 import { LuCircleHelp } from "react-icons/lu";
@@ -19,9 +19,7 @@ import {
   LayoutDashboard,
   List,
   Mail,
-  PersonStanding,
   Settings,
-  TestTube,
   UserRound,
   Users,
 } from "lucide-react";

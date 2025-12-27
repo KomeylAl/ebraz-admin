@@ -1,12 +1,8 @@
 import { Metadata } from "next";
 
 import { Toaster } from "react-hot-toast";
-import Providers from "./providers";
 import Sidebar from "@/components/layout/SideBar";
 import "../globals.css";
-import { ThemeProvider } from "@/context/ThemeContext";
-import { UserProvider } from "@/context/UserContext";
-import { SidebarProvider } from "@/context/SidebarContext";
 import NotificationToast from "@/components/common/notifications/NotificationToast";
 
 export const metadata: Metadata = {
@@ -21,25 +17,18 @@ export default function AdminLayout({
 }>) {
   return (
     <div className="">
-      <ThemeProvider>
-        <Toaster toastOptions={{ className: "z-[10000]" }} />
-        <Providers>
-          <UserProvider>
-            <SidebarProvider>
-              <div className="h-screen flex bg-gray-100">
-                <Sidebar />
+      <Toaster toastOptions={{ className: "z-[10000]" }} />
 
-                <main className="flex-1 lg:mr-80 overflow-y-auto h-screen dark:bg-gray-900">
-                  <NotificationToast />
-                  {children}
-                </main>
+      <div className="h-screen flex bg-gray-100">
+        <Sidebar />
 
-                <Toaster />
-              </div>
-            </SidebarProvider>
-          </UserProvider>
-        </Providers>
-      </ThemeProvider>
+        <main className="flex-1 lg:mr-80 overflow-y-auto h-screen dark:bg-gray-900">
+          <NotificationToast />
+          {children}
+        </main>
+
+        <Toaster />
+      </div>
     </div>
   );
 }

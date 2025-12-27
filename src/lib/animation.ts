@@ -5,6 +5,7 @@ export const animatePageIn = () => {
   const banner = document.getElementById("banner");
 
   if (banner) {
+    gsap.killTweensOf(banner);
     const tl = gsap.timeline();
 
     tl.to(banner, {
@@ -23,6 +24,7 @@ export const animatePageOut = () => {
   const banner = document.getElementById("banner");
 
   if (banner) {
+    gsap.killTweensOf(banner);
     return new Promise<void>((resolve) => {
       banner.style.display = "flex"; // برای flex بودن وسط‌چین
       const tl = gsap.timeline();

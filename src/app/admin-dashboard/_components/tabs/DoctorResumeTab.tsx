@@ -36,7 +36,7 @@ const DoctorResumeTab = ({ doctorId }: { doctorId: string }) => {
         ],
         skills: resume?.skills ?? [""],
         certifications: resume?.certifications ?? [""],
-        social_links: resume?.social_links ?? { linkedin: "", instagram: "" },
+        social_links: resume?.social_links ?? { linkedin: "", instagram: "", website: "", twitter: "" },
       });
   }, [resume, reset]);
 

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
-import Providers from "./admin-dashboard/providers";
 import { UserProvider } from "@/context/UserContext";
 import { SidebarProvider } from "@/context/SidebarContext";
+import Providers from "./admin-dashboard/providers";
 
 export const metadata: Metadata = {
   title: "Create Next App",

@@ -30,7 +30,6 @@ const DoctorPanel = ({ params }: PageProps) => {
     useSendTomorrowSms(doctorId);
 
   const { data } = useGetDoctor(doctorId);
-  console.log(data);
 
   return (
     <div className="w-full h-full flex flex-col">

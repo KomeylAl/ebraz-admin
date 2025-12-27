@@ -34,7 +34,6 @@ const UpdateAdminForm = ({
     register,
     handleSubmit,
     setValue,
-    watch,
     control,
     formState: { errors },
   } = useForm({
@@ -47,10 +46,7 @@ const UpdateAdminForm = ({
     },
   });
 
-  console.log(admin)
-
   const onSubmit = (data: any) => {
-    // console.log(data);
     updateAdmin(data);
   };
 

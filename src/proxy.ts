@@ -1,3 +1,4 @@
+import { ca } from "date-fns/locale";
 import { NextRequest, NextResponse } from "next/server";
 
 export default function proxy(request: NextRequest) {
@@ -17,8 +18,20 @@ export default function proxy(request: NextRequest) {
   // --- ROOT ---
   if (pathname === "/") {
     if (token) {
-      const dashboard =
-        role === "author" ? "/content-dashboard" : "/admin-dashboard";
+      let dashboard = "";
+      switch (role) {
+        case "admin":
+          dashboard = "/admin-dashboard";
+          break;
+        case "author":
+          dashboard = "/content-dashboard";
+          break;
+        case "accountant":
+          dashboard = "/accountant-dashboard";
+          break;
+        default:
+          dashboard = "/admin-dashboard";
+      }
       return NextResponse.redirect(new URL(dashboard, request.url));
     } else {
       return NextResponse.redirect(new URL("/auth/login", request.url));
