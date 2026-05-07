@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
           "Content-type": "application/json",
         },
         body: JSON.stringify({ phone, password }),
+        mode: "no-cors"
       }
     );
 
